@@ -22,5 +22,8 @@ function run(args, isCi) {
 module.exports = run;
 
 if (require.main === module) {
-	run(process.argv.slice(2), isCi);
+	const proc = run(process.argv.slice(2), isCi);
+	if (proc) {
+		proc.on('exit', process.exit);
+	}
 }
