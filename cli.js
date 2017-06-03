@@ -3,19 +3,21 @@
 'use strict';
 const childProcess = require('child_process');
 const isCi = require('is-ci');
+const isWindows = process.platform === 'win32';
+const npmExec = isWindows ? 'npm.cmd' : 'npm'
 
 function run(args, isCi) {
 	const script = isCi ? args[0] : args[1];
 
 	if (script) {
 		return childProcess.spawn(
-      process.env.npm_execpath || 'npm',
-      ['run', script],
+			npmExec,
+			['run', script],
 			{
-				detached: true,
+				detached: !isWindows,
 				stdio: 'inherit'
 			}
-    );
+		);
 	}
 }
 
