@@ -4,7 +4,7 @@
 const childProcess = require('child_process');
 const isCi = require('is-ci');
 const isWindows = process.platform === 'win32';
-const npmExec = isWindows ? 'npm.cmd' : 'npm'
+const npmExec = isWindows ? 'npm.cmd' : process.env.npm_execpath ? process.env.npm_execpath : 'npm';
 
 function run(args, isCi) {
 	const script = isCi ? args[0] : args[1];
