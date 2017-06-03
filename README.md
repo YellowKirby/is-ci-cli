@@ -16,14 +16,13 @@ In your package.json:
 
 ```json
 "scripts": {
-	"test": "is-ci 'test:ci' 'test:local'"
+	"test": "is-ci test:ci test:local"
 }
 ```
 
 When in a CI environment (as detected by
 [is-ci](https://github.com/watson/is-ci)), this runs the first argument as an
 npm (or yarn) script. Otherwise, run the 2nd argument (if provided)
-
 
 ## License
 
