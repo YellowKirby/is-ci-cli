@@ -3,6 +3,7 @@
 'use strict';
 const childProcess = require('child_process');
 const isCi = require('is-ci');
+
 const isWindows = process.platform === 'win32';
 const npmExec = isWindows ? 'npm.cmd' : process.env.npm_execpath ? process.env.npm_execpath : 'npm';
 
