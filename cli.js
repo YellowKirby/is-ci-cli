@@ -10,11 +10,12 @@ const spawn = require('cross-spawn');
 const isCi = require('is-ci');
 
 function run(args, isCi) {
+	const npmExec = process.env.npm_execpath || 'npm';
 	const script = isCi ? args[0] : args[1];
 
 	if (script) {
 		return spawn(
-			'npm',
+			npmExec,
 			['run', script],
 			{
 				stdio: 'inherit'
