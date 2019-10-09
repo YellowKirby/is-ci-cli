@@ -28,6 +28,11 @@
     "xo": "^0.18.2"
   },
   "scripts": {
-    "test": "xo && ava"
+    "lint": "xo",
+    "pretest": "npm run lint",
+    "test": "ava",
+    "ci:test": "is-ci ci:pass ci:fail",
+    "ci:fail": "exit 1",
+    "ci:pass": "exit 0"
   }
 }

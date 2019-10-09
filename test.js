@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import run from './cli';
 
 test.before('stub spawn', () => {
-	sinon.stub(childProcess, 'spawn').callsFake((name, args) => args);
+	sinon.stub(childProcess, 'spawn').callsFake((name, args) => args.slice(-2));
 });
 
 test.after('restore stub', () => {
