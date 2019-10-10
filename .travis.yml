@@ -1,0 +1,24 @@
+sudo: false
+language: node_js
+node_js:
+  - '12'
+  - '10'
+  - '8'
+
+os: 
+  - linux
+  - osx
+  - windows
+
+env:
+  global:
+    - YARN_GPG=no
+
+cache: yarn
+
+before_script:
+  - npm run test
+
+script:
+  - npm run ci:test
+  - yarn ci:test
