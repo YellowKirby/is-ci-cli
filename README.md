@@ -2,6 +2,8 @@
 
 > Run different npm scripts in a CI environment
 
+[![Build Status](https://travis-ci.org/YellowKirby/is-ci-cli.svg?branch=master)](https://travis-ci.org/YellowKirby/is-ci-cli)
+
 ## Install
 
 Ensure you have [Node.js](https://nodejs.org) version 8+ installed. Then run the following:
