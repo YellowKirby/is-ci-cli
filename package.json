@@ -34,5 +34,10 @@
     "ci:test": "is-ci ci:pass ci:fail",
     "ci:fail": "exit 1",
     "ci:pass": "exit 0"
+  },
+  "xo": {
+    "rules": {
+      "camelcase": "off"
+    }
   }
 }
