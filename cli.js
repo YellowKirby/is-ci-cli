@@ -16,7 +16,7 @@ function isYarn(npmExec) {
 function getScriptArgs(args, npmExec) {
 	const rawArgs = args.slice(2);
 	// Npm requires script arguments with dashes, like so: `npm run test -- --watch`
-	// Yarn results in a deprecation warning in this case, so it needs to be skipped
+	// Yarn results in a deprecation warning in this case, so dashes need to be skipped
 	const shouldPrefixArgs = rawArgs.length > 0 && !isYarn(npmExec);
 	return shouldPrefixArgs ? ['--', ...rawArgs] : rawArgs;
 }
