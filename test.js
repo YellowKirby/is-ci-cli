@@ -1,5 +1,4 @@
 import childProcess from 'child_process';
-import path from 'path';
 import test from 'ava';
 import sinon from 'sinon';
 import run from './cli';
@@ -25,19 +24,9 @@ test('runs nothing if no second argument and not in CI environment', t => {
 });
 
 test('runs script with additional arguments if provided', t => {
-	let run;
+	t.deepEqual(run(['first', 'second', '--test', 'value'], true, 'npm'), ['run', ['first', '--', '--test', 'value']]);
+	t.deepEqual(run(['first', 'second', '--test', 'value'], false, 'npm'), ['run', ['second', '--', '--test', 'value']]);
 
-	// NPM
-	delete require.cache[path.resolve('./cli')];
-	process.env.npm_execpath = 'npm';
-	run = require('./cli');
-	t.deepEqual(run(['first', 'second', '--test', 'value'], true), ['run', ['first', '--', '--test', 'value']]);
-	t.deepEqual(run(['first', 'second', '--test', 'value'], false), ['run', ['second', '--', '--test', 'value']]);
-
-	// Yarn
-	delete require.cache[path.resolve('./cli')];
-	process.env.npm_execpath = 'yarn';
-	run = require('./cli');
-	t.deepEqual(run(['first', 'second', '--test', 'value'], true), ['run', ['first', '--test', 'value']]);
-	t.deepEqual(run(['first', 'second', '--test', 'value'], false), ['run', ['second', '--test', 'value']]);
+	t.deepEqual(run(['first', 'second', '--test', 'value'], true, 'yarn'), ['run', ['first', '--test', 'value']]);
+	t.deepEqual(run(['first', 'second', '--test', 'value'], false, 'yarn'), ['run', ['second', '--test', 'value']]);
 });

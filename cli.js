@@ -21,8 +21,7 @@ function getScriptArgs(args, npmExec) {
 	return shouldPrefixArgs ? ['--', ...rawArgs] : rawArgs;
 }
 
-function run(args, isCi) {
-	const npmExec = process.env.npm_execpath || 'npm';
+function run(args, isCi, npmExec = 'npm') {
 	const script = isCi ? args[0] : args[1];
 	const scriptArgs = getScriptArgs(args, npmExec);
 
@@ -40,7 +39,7 @@ function run(args, isCi) {
 module.exports = run;
 
 if (require.main === module) {
-	const child = run(process.argv.slice(2), isCi);
+	const child = run(process.argv.slice(2), isCi, process.env.npm_execpath);
 	if (child) {
 		child.on('exit', process.exit);
 	}
