@@ -6,7 +6,7 @@ process.on('unhandledRejection', err => {
 	throw err;
 });
 
-const spawn = require('cross-spawn');
+const crossSpawn = require('cross-spawn');
 const isCi = require('is-ci');
 
 function isYarn(npmExec) {
@@ -21,7 +21,7 @@ function getScriptArgs(args, npmExec) {
 	return shouldPrefixArgs ? ['--', ...rawArgs] : rawArgs;
 }
 
-function run(args, isCi, npmExec = 'npm') {
+function run(args, isCi, spawn, npmExec = 'npm') {
 	const script = isCi ? args[0] : args[1];
 	const scriptArgs = getScriptArgs(args, npmExec);
 
@@ -39,7 +39,7 @@ function run(args, isCi, npmExec = 'npm') {
 module.exports = run;
 
 if (require.main === module) {
-	const child = run(process.argv.slice(2), isCi, process.env.npm_execpath);
+	const child = run(process.argv.slice(2), isCi, process.env.npm_execpath, crossSpawn);
 	if (child) {
 		child.on('exit', process.exit);
 	}

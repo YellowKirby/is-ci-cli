@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "ava": "^0.19.1",
-    "sinon": "^2.2.0",
+    "sinon": "^9.0.2",
     "xo": "^0.18.2"
   },
   "scripts": {
