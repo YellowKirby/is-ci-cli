@@ -31,7 +31,7 @@
     "lint": "xo",
     "pretest": "npm run lint",
     "test": "ava",
-    "ci:test": "./cli.js ci:pass ci:fail",
+    "ci:test": "node cli.js ci:pass ci:fail",
     "ci:fail": "exit 1",
     "ci:pass": "exit 0"
   }
