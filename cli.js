@@ -39,7 +39,7 @@ function run(args, isCi, spawn, npmExec = 'npm') {
 module.exports = run;
 
 if (require.main === module) {
-	const child = run(process.argv.slice(2), isCi, process.env.npm_execpath, crossSpawn);
+	const child = run(process.argv.slice(2), isCi, crossSpawn, process.env.npm_execpath);
 	if (child) {
 		child.on('exit', process.exit);
 	}
