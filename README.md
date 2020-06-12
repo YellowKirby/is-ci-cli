@@ -2,7 +2,7 @@
 
 > Run different npm scripts in a CI environment
 
-[![Build Status](https://travis-ci.org/YellowKirby/is-ci-cli.svg?branch=master)](https://travis-ci.org/YellowKirby/is-ci-cli)
+![CI](https://github.com/YellowKirby/is-ci-cli/workflows/CI/badge.svg)
 
 ## Install
 
