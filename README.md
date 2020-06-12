@@ -1,24 +1,22 @@
-# is-ci-cli
+# is-ci-cli ![CI](https://github.com/YellowKirby/is-ci-cli/workflows/CI/badge.svg)
 
-> Run different npm scripts in a CI environment
-
-[![Build Status](https://travis-ci.org/YellowKirby/is-ci-cli.svg?branch=master)](https://travis-ci.org/YellowKirby/is-ci-cli)
+Run different npm scripts in a CI environment
 
 ## Install
 
 Ensure you have [Node.js](https://nodejs.org) version 8+ installed. Then run the following:
 
-```
-$ npm install --dev is-ci-cli
+```sh
+npm install --dev is-ci-cli
 ```
 
 ## Usage
 
 In your package.json:
 
-```json
+```js
 "scripts": {
-	"test": "is-ci test:ci test:local"
+  "test": "is-ci test:ci test:local"
 }
 ```
 
