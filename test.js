@@ -6,7 +6,7 @@ import run from './cli';
 let spawn;
 
 test.before('fake spawn', () => {
-	spawn = sinon.fake((name, args) => args.slice(-2));
+	spawn = sinon.fake((name, args) => args);
 });
 
 test.afterEach('reset fake', () => {
