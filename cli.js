@@ -2,7 +2,7 @@
 
 'use strict';
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
 	throw err;
 });
 
@@ -25,21 +25,22 @@ function run(args, isCi, spawn, npmExec = 'npm') {
 	const script = isCi ? args[0] : args[1];
 	const scriptArgs = getScriptArgs(args, npmExec);
 
-	if (script) {
-		return spawn(
-			npmExec,
-			['run', script, ...scriptArgs],
-			{
-				stdio: 'inherit'
-			}
-		);
+	if (script && script.trim() !== '--') {
+		return spawn(npmExec, ['run', script, ...scriptArgs], {
+			stdio: 'inherit',
+		});
 	}
 }
 
 module.exports = run;
 
 if (require.main === module) {
-	const child = run(process.argv.slice(2), isCi, crossSpawn, process.env.npm_execpath);
+	const child = run(
+		process.argv.slice(2),
+		isCi,
+		crossSpawn,
+		process.env.npm_execpath
+	);
 	if (child) {
 		child.on('exit', process.exit);
 	}

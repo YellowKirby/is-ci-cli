@@ -1,43 +1,63 @@
-import test from 'ava';
-import sinon from 'sinon';
-import run from './cli';
+const test = require('ava');
+const sinon = require('sinon');
+const run = require('./cli');
 
-/** @type {sinon.SinonSpy} */
-let spawn;
+const mockSpawn = () => sinon.fake();
 
-test.before('fake spawn', () => {
-	spawn = sinon.fake((name, args) => args);
-});
+const macro = (isCi) => (t, input, expected, npmExec = 'npm') => {
+	const spawn = mockSpawn();
+	run(input.split(/\s+/), isCi, spawn, npmExec);
+	const actual = spawn.lastCall.args.slice(0, 2);
+	t.deepEqual(actual, [npmExec, ['run', ...expected.split(/\s+/)]]);
+};
 
-test.afterEach('reset fake', () => {
-	spawn.resetHistory();
-});
+const ci = macro(true);
+const noCi = macro(false);
 
-test('runs first argument when in CI environment', t => {
-	run(['first', 'second'], true, spawn);
-	t.true(spawn.returned(['run', 'first']));
-});
+test('ci: runs first script', ci, 'first second', 'first');
 
-test('runs second argument when not in CI environment', t => {
-	run(['first', 'second'], false, spawn);
-	t.true(spawn.returned(['run', 'second']));
-});
+test(
+	'ci: npm: passes additional arguments',
+	ci,
+	'first second --test value',
+	'first -- --test value',
+	'npm'
+);
 
-test('runs nothing if no second argument and not in CI environment', t => {
+test(
+	'ci: yarn: passes additional arguments',
+	ci,
+	'first second --test value',
+	'first --test value',
+	'yarn'
+);
+
+test('no ci: runs second script', noCi, 'first second', 'second');
+
+test(
+	'no ci: npm: passes additional arguments',
+	noCi,
+	'first second --test value',
+	'second -- --test value',
+	'npm'
+);
+
+test(
+	'no ci: yarn: passes additional arguments',
+	noCi,
+	'first second --test value',
+	'second --test value',
+	'yarn'
+);
+
+test('no ci: runs nothing if no second script defined', (t) => {
+	const spawn = mockSpawn();
 	run(['first'], false, spawn);
 	t.false(spawn.called);
 });
 
-test('runs script with additional arguments if provided', t => {
-	run(['first', 'second', '--test', 'value'], true, spawn, 'npm');
-	t.true(spawn.lastCall.returned(['run', 'first', '--', '--test', 'value']));
-
-	run(['first', 'second', '--test', 'value'], false, spawn, 'npm');
-	t.true(spawn.lastCall.returned(['run', 'second', '--', '--test', 'value']));
-
-	run(['first', 'second', '--test', 'value'], true, spawn, 'yarn');
-	t.true(spawn.lastCall.returned(['run', 'first', '--test', 'value']));
-
-	run(['first', 'second', '--test', 'value'], false, spawn, 'yarn');
-	t.true(spawn.lastCall.returned(['run', 'second', '--test', 'value']));
+test('no ci: runs nothing if no second script defined but has arguments', (t) => {
+	const spawn = mockSpawn();
+	run(['first', '--', '--test', 'value'], false, spawn);
+	t.false(spawn.called);
 });
