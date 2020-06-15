@@ -8,7 +8,7 @@
     "is-ci": "cli.js"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "files": [
     "cli.js"
@@ -16,16 +16,18 @@
   "keywords": [
     "ci",
     "cli",
-    "npm-scripts"
+    "npm-scripts",
+    "run-scripts"
   ],
   "dependencies": {
-    "cross-spawn": "^7.0.0",
+    "cross-spawn": "^7.0.3",
     "is-ci": "^2.0.0"
   },
   "devDependencies": {
-    "ava": "^0.19.1",
-    "sinon": "^8.1.1",
-    "xo": "^0.18.2"
+    "ava": "^3.9.0",
+    "prettier": "^2.0.5",
+    "sinon": "^9.0.2",
+    "xo": "^0.32.0"
   },
   "scripts": {
     "lint": "xo",
