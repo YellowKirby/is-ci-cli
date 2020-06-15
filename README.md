@@ -24,6 +24,32 @@ When in a CI environment (as detected by
 [is-ci](https://github.com/watson/is-ci)), this runs the first argument as an
 npm (or yarn) script. Otherwise, run the 2nd argument (if provided)
 
+### Additional arguments
+
+Any additional arguments provided will be passed to the corresponding script that is run. For example,
+with the following config:
+
+```js
+{
+  "scripts": {
+    "test": "is-ci test:ci test:local",
+    "test:ci": "jest --config jest.ci.config.js",
+    "test:local": "jest --config jest.local.config.js"
+  }
+}
+```
+
+Running the following will pass all additional arguments through to the
+underlying command:
+
+```sh
+yarn test --watch
+# jest --config jest.local.config.js --watch
+
+CI=true yarn test --coverage --coverageReporters=text-summary
+# jest --config jest.ci.config.js --coverage --coverageReporters=text-summary
+```
+
 ## License
 
-MIT
+[MIT](./LICENSE)
