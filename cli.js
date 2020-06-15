@@ -28,7 +28,7 @@ function run(args, isCi, spawn, npmExec = 'npm') {
 	if (script) {
 		return spawn(
 			npmExec,
-			['run', [script, ...scriptArgs]],
+			['run', script, ...scriptArgs],
 			{
 				stdio: 'inherit'
 			}

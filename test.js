@@ -6,7 +6,7 @@ import run from './cli';
 let spawn;
 
 test.before('fake spawn', () => {
-	spawn = sinon.fake((name, args) => args.slice(-2));
+	spawn = sinon.fake((name, args) => args);
 });
 
 test.afterEach('reset fake', () => {
@@ -15,12 +15,12 @@ test.afterEach('reset fake', () => {
 
 test('runs first argument when in CI environment', t => {
 	run(['first', 'second'], true, spawn);
-	t.true(spawn.returned(['run', ['first']]));
+	t.true(spawn.returned(['run', 'first']));
 });
 
 test('runs second argument when not in CI environment', t => {
 	run(['first', 'second'], false, spawn);
-	t.true(spawn.returned(['run', ['second']]));
+	t.true(spawn.returned(['run', 'second']));
 });
 
 test('runs nothing if no second argument and not in CI environment', t => {
@@ -30,14 +30,14 @@ test('runs nothing if no second argument and not in CI environment', t => {
 
 test('runs script with additional arguments if provided', t => {
 	run(['first', 'second', '--test', 'value'], true, spawn, 'npm');
-	t.true(spawn.lastCall.returned(['run', ['first', '--', '--test', 'value']]));
+	t.true(spawn.lastCall.returned(['run', 'first', '--', '--test', 'value']));
 
 	run(['first', 'second', '--test', 'value'], false, spawn, 'npm');
-	t.true(spawn.lastCall.returned(['run', ['second', '--', '--test', 'value']]));
+	t.true(spawn.lastCall.returned(['run', 'second', '--', '--test', 'value']));
 
 	run(['first', 'second', '--test', 'value'], true, spawn, 'yarn');
-	t.true(spawn.lastCall.returned(['run', ['first', '--test', 'value']]));
+	t.true(spawn.lastCall.returned(['run', 'first', '--test', 'value']));
 
 	run(['first', 'second', '--test', 'value'], false, spawn, 'yarn');
-	t.true(spawn.lastCall.returned(['run', ['second', '--test', 'value']]));
+	t.true(spawn.lastCall.returned(['run', 'second', '--test', 'value']));
 });
