@@ -1,40 +1,55 @@
 {
-  "name": "is-ci-cli",
-  "version": "2.1.1",
-  "description": "Run different npm scripts in a CI environment",
-  "license": "MIT",
-  "repository": "YellowKirby/is-ci-cli",
-  "bin": {
-    "is-ci": "cli.js"
-  },
-  "engines": {
-    "node": ">=10"
-  },
-  "files": [
-    "cli.js"
-  ],
-  "keywords": [
-    "ci",
-    "cli",
-    "npm-scripts",
-    "run-scripts"
-  ],
-  "dependencies": {
-    "cross-spawn": "^7.0.3",
-    "is-ci": "^2.0.0"
-  },
-  "devDependencies": {
-    "ava": "^3.9.0",
-    "prettier": "^2.0.5",
-    "sinon": "^9.0.2",
-    "xo": "^0.32.0"
-  },
-  "scripts": {
-    "lint": "xo",
-    "pretest": "npm run lint",
-    "test": "ava",
-    "ci:test": "node cli.js ci:check-args ci:fail --arg1",
-    "ci:fail": "echo \"CI ran incorrect run-script, failing\"; exit 1;",
-    "ci:check-args": "node -e \"assert(process.argv[1] === '--arg1', 'process.argv[1]' + ' should match --arg1')\" --"
-  }
+	"name": "is-ci-cli",
+	"version": "2.1.1",
+	"description": "Run different npm scripts in a CI environment",
+	"repository": "YellowKirby/is-ci-cli",
+	"license": "MIT",
+	"keywords": [
+		"ci",
+		"cli",
+		"npm-scripts",
+		"run-scripts"
+	],
+	"scripts": {
+		"lint": "xo",
+		"pretest": "npm run lint",
+		"test": "ava",
+		"ci:test": "node cli.js ci:check-args ci:fail --arg1",
+		"ci:fail": "echo \"CI ran incorrect run-script, failing\"; exit 1;",
+		"ci:check-args": "node -e \"assert(process.argv[1] === '--arg1', 'process.argv[1]' + ' should match --arg1')\" --"
+	},
+	"bin": {
+		"is-ci": "cli.js"
+	},
+	"engines": {
+		"node": ">=10"
+	},
+	"files": [
+		"cli.js"
+	],
+	"dependencies": {
+		"cross-spawn": "^7.0.3",
+		"is-ci": "^2.0.0"
+	},
+	"devDependencies": {
+		"ava": "^3.9.0",
+		"husky": "^4.2.5",
+		"prettier": "^2.0.5",
+		"pretty-quick": "^2.0.1",
+		"sinon": "^9.0.2",
+		"xo": "^0.32.0"
+	},
+	"xo": {
+		"prettier": true
+	},
+	"prettier": {
+		"trailingComma": "es5",
+		"singleQuote": true,
+		"useTabs": true
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "pretty-quick --staged"
+		}
+	}
 }
