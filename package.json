@@ -12,7 +12,6 @@
 	],
 	"scripts": {
 		"lint": "xo",
-		"pretest": "npm run lint",
 		"test": "ava",
 		"ci:test": "node cli.js ci:check-args ci:fail --arg1",
 		"ci:fail": "echo \"CI ran incorrect run-script, failing\"; exit 1;",
@@ -34,8 +33,8 @@
 	"devDependencies": {
 		"ava": "^3.9.0",
 		"husky": "^4.2.5",
+		"lint-staged": "^10.2.10",
 		"prettier": "^2.0.5",
-		"pretty-quick": "^2.0.1",
 		"sinon": "^9.0.2",
 		"xo": "^0.32.0"
 	},
@@ -49,7 +48,14 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "pretty-quick --staged"
+			"pre-commit": "lint-staged"
 		}
+	},
+	"lint-staged": {
+		"*.js": [
+			"xo --fix",
+			"prettier --write"
+		],
+		"*.md": "prettier --write"
 	}
 }
