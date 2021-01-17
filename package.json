@@ -5,7 +5,8 @@
   "license": "MIT",
   "repository": "YellowKirby/is-ci-cli",
   "bin": {
-    "is-ci": "cli.js"
+    "is-ci": "cli.js",
+    "is-ci-cli": "cli.js"
   },
   "engines": {
     "node": ">=8"

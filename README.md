@@ -16,7 +16,7 @@ In your package.json:
 
 ```js
 "scripts": {
-  "test": "is-ci test:ci test:local"
+  "test": "is-ci-cli test:ci test:local"
 }
 ```
 
